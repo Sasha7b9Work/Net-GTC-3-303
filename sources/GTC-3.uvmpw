@@ -8,7 +8,11 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
 
   <project>
-    <PathAndName>.\GTC-3\GTC-3.uvprojx</PathAndName>
+    <PathAndName>.\GTC-3\GTC-3-103.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\GTC-3\GTC-3-303.uvprojx</PathAndName>
     <NodeIsActive>1</NodeIsActive>
   </project>
 

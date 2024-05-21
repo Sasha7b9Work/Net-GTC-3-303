@@ -10,8 +10,12 @@ archive.zip
 
 sources/generated/
 
-sources/GTC-3/Listings/
-sources/GTC-3/Objects/
-sources/GTC-3/Listings-Debug/
-sources/GTC-3/Objects-Debug/
 sources/GTC-3/DebugConfig/
+sources/GTC-3/Listings-103/
+sources/GTC-3/Objects-103/
+sources/GTC-3/Listings-Debug-103/
+sources/GTC-3/Objects-Debug-103/
+sources/GTC-3/Listings-303/
+sources/GTC-3/Objects-303/
+sources/GTC-3/Listings-Debug-303/
+sources/GTC-3/Objects-Debug-303/
