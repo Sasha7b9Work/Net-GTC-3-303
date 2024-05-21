@@ -4,8 +4,9 @@
 
 struct InterPair
 {
-    int measured;       // Измеренное значение
-    int real;           // Реальное значение
+    InterPair(float _measured, float _real) : measured(_measured), real(_real) { }
+    float measured;       // Измеренное значение
+    float real;           // Реальное значение
 };
 
 
@@ -14,6 +15,8 @@ class Interpolator
 public:
 
     Interpolator(const InterPair &_begin, const InterPair &_end) : begin(_begin), end(_end) { }
+
+    float Resolve(float meas);
 
 private:
 

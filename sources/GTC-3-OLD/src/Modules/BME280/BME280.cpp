@@ -3,6 +3,7 @@
 #include "Modules/BME280/BME280.h"
 #include "Modules/BME280/bme280_driver.h"
 #include "Hardware/HAL/HAL.h"
+#include "Utils/Interpolator.h"
 #include <stm32f1xx_hal.h>
 #include <cstring>
 #include <cstdlib>
@@ -16,6 +17,8 @@ namespace BME280
 
     // ѕопытка соединени€ с усройством по адресу id
     static bool AttemptConnection(uint8 id);
+
+    static float ConvertPressure(float);
 }
 
 
@@ -67,9 +70,9 @@ bool BME280::AttemptConnection(uint8 id)
 }
 
 
-bool BME280::GetMeasures(float* temp, float* pressure, float* humidity)
+bool BME280::GetMeasures(float *temp, float *pressure, float *humidity)
 {
-    if(HAL_GetTick() < timeNext)
+    if (HAL_GetTick() < timeNext)
     {
         return false;
     }
@@ -105,11 +108,31 @@ bool BME280::GetMeasures(float* temp, float* pressure, float* humidity)
     if (result == BME280_OK)
     {
         *temp = (float)comp_data.temperature;
-        *pressure = (float)comp_data.pressure / 100.0f;
+        *pressure = ConvertPressure((float)comp_data.pressure / 100.0f);
         *humidity = (float)comp_data.humidity;
     }
 
     return (result == BME280_OK);
 
 #endif
+}
+
+
+float BME280::ConvertPressure(float meas)
+{
+    if (meas < 0.0f || meas > 100.0f)
+    {
+        return meas;
+    }
+
+    static const float measure[] = { 0.0f, 6.8f, 11.7f, 20.3f, 28.6f, 45.3f, 53.7f, 62.5f, 87.6f, 100.0f, 1000.0f };
+    static const float real[] =    { 0.0f, 5.2f, 10.3f, 20.3f, 30.4f, 50.4f, 60.4f, 70.4f, 94.9f, 100.0f, 1000.0f };
+
+    for (int i = 0; ; i++)
+    {
+        if (meas >= measure[i] && meas <= measure[i + 1])
+        {
+            return Interpolator(InterPair(measure[i], real[i]), InterPair(measure[i + 1], real[i + 1])).Resolve(meas);
+        }
+    }
 }
