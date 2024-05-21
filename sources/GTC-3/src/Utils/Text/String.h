@@ -1,7 +1,10 @@
 // 2022/03/30 08:25:33 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "Display/Colors.h"
+#include <cstdarg>
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 
 #define DEFAULT_SIZE_STRING 64
@@ -13,9 +16,31 @@ public:
 
     String() { buffer[0] = '\0'; }
 
-    explicit String(pchar, ...);
+    explicit String(pchar format, ...)
+    {
+        std::va_list args;
+        va_start(args, format);
+        int num_symbols = std::vsprintf(buffer, format, args);
+        va_end(args);
 
-    void SetFormat(pchar format, ...);
+        if(num_symbols < 0 || num_symbols > capacity - 1)
+        {
+            LOG_ERROR_TRACE("Very small string buffer %d, need %d:", capacity, num_symbols);
+        }
+    }
+
+    void SetFormat(pchar format, ...)
+    {
+        std::va_list args;
+        va_start(args, format);
+        int num_symbols = std::vsprintf(buffer, format, args);
+        va_end(args);
+
+        if(num_symbols < 0 || num_symbols > capacity - 1)
+        {
+            LOG_ERROR_TRACE("Very small string buffer %d, need %d:", capacity, num_symbols);
+        }
+    }
 
     char *c_str() const { return (char *)&buffer[0]; }
 
