@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-project (RES-Network)
+project (GTC-3)
 
-set (TARGET_NAME )
+set (TARGET_NAME GTC-3)
 
 set(CMAKE_UNITY_BUILD ON)
 

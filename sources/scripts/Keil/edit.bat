@@ -1,1 +1,1 @@
-start ../../Network.uvmpw
+start ../../GTC-3.uvmpw

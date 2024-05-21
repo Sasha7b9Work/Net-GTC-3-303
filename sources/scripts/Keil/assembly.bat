@@ -1,7 +1,7 @@
 @echo off
 
 set _COMPILER_=c:\Keil_v5\UV4\UV4
-set _PROJECT_DEVICE_=..\..\Network.uvmpw
+set _PROJECT_DEVICE_=..\..\GTC-3.uvmpw
 
 rem 1, если требуется очистка
 set isClean=0
