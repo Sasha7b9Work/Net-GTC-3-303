@@ -29,6 +29,7 @@ add_compile_options(
     /wd4514    # 'function' : unreferenced inline function has been removed
     /wd4623    # default constructor was implicitly defined as deleted
     /wd4626    # assignment operator was implicitly defined as deleted
+    /wd4710    # function not inlined
     /wd4820    # 'xxx': '4' bytes padding added after data member 'yyy'
     /wd5027    # move assignment operator was implicitly defined as deleted
     /wd5045    # Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
