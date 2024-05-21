@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>WorkSpace</WorkspaceName>
+
+  <project>
+    <PathAndName>.\GTC-3\GTC-3.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+  </project>
+
+  <project>
+    <PathAndName>.\MS-1\MS-1.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\Device\Device.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\5-Governor\5-Governor.uvprojx</PathAndName>
+  </project>
+
+</ProjectWorkspace>
