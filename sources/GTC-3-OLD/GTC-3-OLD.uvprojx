@@ -979,6 +979,16 @@
               <FileType>5</FileType>
               <FilePath>.\src\Utils\Debug.h</FilePath>
             </File>
+            <File>
+              <FileName>Interpolator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\Utils\Interpolator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Interpolator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Utils\Interpolator.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1980,6 +1990,16 @@
               <FileName>Debug.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\src\Utils\Debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>Interpolator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\Utils\Interpolator.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Interpolator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Utils\Interpolator.h</FilePath>
             </File>
           </Files>
         </Group>
