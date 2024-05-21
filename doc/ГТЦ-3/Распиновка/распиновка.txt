@@ -1,0 +1,45 @@
+Кнопка S2 - 45 - PB8
+Кнопка S3 - 46 - PB9
+Динамик   - 40 - PB4
+I2C SCL   - 42 - PB6
+I2C SDA   - 43 - PB7
+
+W25Q80DV
+    DD2:/CS   - 14 - PA4  SPI1_NSS
+    DD2:DO    - 16 - PA6  SPI1_MISO
+    DD2:/WP   - 18 - PB0
+    DD2:DI    - 17 - PA7  SPI1_MOSI
+    DD2:CLK   - 15 - PA5  SPI1_SCK
+    DD2:/HOLD
+
+TFT:RST   - 22 - PB11
+TFT:CS    - 25 - PB12
+TFT:SCL   - 26 - PB13
+TFT:DC    - 27 - PB14
+TFT:SDA   - 28 - PB15
+HC-12:SET - 11 - PA1
+HC-12:TX  - 31 - PA10
+HC-12:RX  - 30 - PA9
+D+        - 33 - PA12
+D-        - 32 - PA11
+VBAT      - 1
+АЦП АКБ   - 13 - PA3
+
+34 - SWDIO
+37 - SWCLK
+7  - NRST
+3  - PC14 осциллятор 1
+4  - PC15 осциллятор 1
+5  - OSC_IN
+6  - OSC_OUT
+
+9  - 3.3V
+24 - 3.3V
+36 - 3.3V
+48 - 3.3V
+
+8  - GND
+23 - GND
+35 - GND
+44 - GND
+47 - GND
