@@ -18,7 +18,7 @@ namespace BME280
     // ѕопытка соединени€ с усройством по адресу id
     static bool AttemptConnection(uint8 id);
 
-    static float ConvertPressure(float);
+    static float ConvertHumidity(float);
 }
 
 
@@ -108,8 +108,8 @@ bool BME280::GetMeasures(float *temp, float *pressure, float *humidity)
     if (result == BME280_OK)
     {
         *temp = (float)comp_data.temperature;
-        *pressure = ConvertPressure((float)comp_data.pressure / 100.0f);
-        *humidity = (float)comp_data.humidity;
+        *pressure = (float)comp_data.pressure / 100.0f;
+        *humidity = ConvertHumidity((float)comp_data.humidity);
     }
 
     return (result == BME280_OK);
@@ -118,7 +118,7 @@ bool BME280::GetMeasures(float *temp, float *pressure, float *humidity)
 }
 
 
-float BME280::ConvertPressure(float meas)
+float BME280::ConvertHumidity(float meas)
 {
     if (meas < 0.0f || meas > 100.0f)
     {
