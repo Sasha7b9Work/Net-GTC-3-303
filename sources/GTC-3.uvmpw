@@ -13,12 +13,11 @@
 
   <project>
     <PathAndName>.\GTC-3\GTC-3-303.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
   </project>
 
   <project>
     <PathAndName>.\GTC-3-OLD\GTC-3-OLD.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
 </ProjectWorkspace>
