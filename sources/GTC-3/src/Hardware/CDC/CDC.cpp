@@ -1,3 +1,4 @@
+#include "defines.h"
 #include "Hardware/CDC/CDC.h"
 #include <usbd_cdc.h>
 

@@ -35,7 +35,7 @@ namespace StartScreen
 
         bool AppendPixel()
         {
-            int num_fills = 0;
+            volatile int num_fills = 0;
 
             for (int i = 0; i < 5; i++)
             {
