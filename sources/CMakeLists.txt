@@ -11,4 +11,3 @@ if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
 endif()
 
 add_subdirectory(GTC-3)
-add_subdirectory(GTC-3-OLD)

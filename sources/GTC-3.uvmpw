@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName>D:\Projects\RES-Network\GTC-3\sources\GTC-3.uvmpw</WorkspaceName>
+  <WorkspaceName>GTC-3</WorkspaceName>
 
   <project>
     <PathAndName>.\GTC-3\GTC-3-303.uvprojx</PathAndName>
