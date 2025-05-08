@@ -1,58 +1,47 @@
-February 08, 2023 -- The wxWidgets team is pleased to announce a new
+April 24, 2025 -- The wxWidgets team is pleased to announce a new
 stable release of our open source framework for the development of native
 cross-platform applications in C++.
 
-wxWidgets 3.2.2 is part of the API and ABI-stable 3.2.x release series and is
+wxWidgets 3.2.8 is part of the API and ABI-stable 3.2.x release series and is
 now available from
 
     https://www.wxwidgets.org/downloads/
 
 and
 
-    https://github.com/wxWidgets/wxWidgets/releases/v3.2.2
+    https://github.com/wxWidgets/wxWidgets/releases/v3.2.8
 
-This release comes only a few months after the previous 3.2.1, but contains
-an important number of bug fixes and enhancements, further improving high DPI
-support, including:
 
-- Better window resizing on DPI change in wxMSW.
-- Fix using native icons returned by wxArtProvider.
-- Fix menu items using custom font in high DPI.
-- High resolution icons support in wxGenericTreeCtrl and wxGenericListCtrl.
+This is mostly a bug fix release correcting several problems found in the
+previous 3.2.7 release:
 
-and also improving locale-related code under Mac and Unix systems:
+- Fix crash in wxPropertyGrid with wxGTK3 after recent change (#25286).
+- Fix padding of wxMenu in high DPI under Windows 11 (#25117).
+- Fix key codes in WXK_NUMPADx events in wxGTK (#25263).
+- Fix ABI breakage for versioned symbols in 3.2.7 (#25327).
+- Fix third party libraries build with Xcode 16.3.
+- Fix using OpenGL and WebView when using CMake install (#25266).
 
-- wxUILocale::UseDefault() works for locales using different language and
-  region under Mac and fails when used for unsupported locale under Unix.
-- New wxUILocale::GetSystemLocaleId() allows to retrieve such locales IDs.
-- wxUILocale::GetCurrent() works currently for "C" locale under Mac.
+But it still contains a couple of enhancements, including:
 
-Some other user-visible enhancements made in this release:
+- Add wxVector(std::initializer_list<U> list) ctor (#25290).
+- Add mouse scrolling support to generic wxSpinCtrl (#24935).
+- Add @USER@ macro to HTML and RichText printers (#25318).
 
-- Allow selecting and copying text in wxMessageDialog in wxGTK.
-- Improve size and behaviour of in-place editor in wxGenericTreeCtrl.
-- Fix sometimes missing overwrite prompt in "Save" file dialog in wxMSW.
-- Fix glitch in drawing wxStaticBox with a control as label in wxMSW.
+Other changes include:
 
-There are also some important bug fixes:
+- Call OnExceptionInMainLoop() in wxGTK if idle event handler throws (#25312).
+- Compute wxStaticText best size ourselves if GTK does it wrongly (#24781).
+- Fix page count display in wxHtmlPrintout when there is only one page (#25320).
+- Miscellaneous CMake build improvements (#25324).
+- Fix new warnings with gcc 15 (#25338).
+- Update Brazilian Portuguese translations.
 
-- Fix regression in saving TIFF images that could end up truncated.
-- Fix long standing bug in parsing wxHTTP responses.
-- Fix data race when processing events generated in a worker thread.
-- Avoid appending extraneous NUL bytes to wxTextDataObject text in wxMSW.
-- Fix handling of fonts with fractional sizes in wxOSX.
-- Fix resizing wxGLCanvas with EGL and Wayland in wxGTK.
-- Fix display artefacts when using AUI without compositor under X11.
-- Work around crashes when using wxTextCtrl with MinGW TDM 64.
-- Fix for a possible crash when handling menu events under Mac.
-- Third-party libraries have been updated to the latest versions.
+Please see the full change log for more details:
 
-All in all, this release includes ~150 fixes from 27 unique contributors,
-please see the full change log for more details:
+https://raw.githubusercontent.com/wxWidgets/wxWidgets/v3.2.8/docs/changes.txt
 
-https://raw.githubusercontent.com/wxWidgets/wxWidgets/v3.2.2/docs/changes.txt
-
-This release is API and ABI-compatible with the previous 3.2.x, so
+This release is API and ABI-compatible with the previous 3.2.x, meaning that
 the existing applications don't even need to be rebuilt to profit from all the
 fixes above if they use shared/dynamic libraries. And if they do need to be
 recompiled, this can be done without any changes to the code.

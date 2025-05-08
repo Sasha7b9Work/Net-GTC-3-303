@@ -9,6 +9,8 @@
 
 list(APPEND CMAKE_MODULE_PATH "${wxSOURCE_DIR}/build/cmake/modules")
 
+file(TO_CMAKE_PATH "${CMAKE_INSTALL_PREFIX}" CMAKE_INSTALL_PREFIX)
+
 include(build/cmake/files.cmake)            # Files list
 include(build/cmake/source_groups.cmake)    # Source group definitions
 include(build/cmake/functions.cmake)        # wxWidgets functions
@@ -17,6 +19,7 @@ include(build/cmake/options.cmake)          # User options
 include(build/cmake/init.cmake)             # Init various global build vars
 include(build/cmake/pch.cmake)              # Precompiled header support
 
+add_subdirectory(build/cmake/locale locale)
 add_subdirectory(build/cmake/lib libs)
 add_subdirectory(build/cmake/utils utils)
 
@@ -65,12 +68,12 @@ if(MSVC OR MINGW OR CYGWIN)
     else()
         set(wxREQUIRED_OS_DESC "Windows Vista / Windows Server 2008")
     endif()
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        wx_string_append(wxREQUIRED_OS_DESC " (x64 Edition)")
+    if(wxPLATFORM_ARCH)
+        wx_string_append(wxREQUIRED_OS_DESC " (${wxPLATFORM_ARCH} Edition)")
     endif()
 elseif(APPLE AND NOT IPHONE)
     if(DEFINED CMAKE_OSX_DEPLOYMENT_TARGET)
-        set(wxREQUIRED_OS_DESC "macOS ${CMAKE_OSX_DEPLOYMENT_TARGET}")
+        set(wxREQUIRED_OS_DESC "macOS ${CMAKE_OSX_DEPLOYMENT_TARGET} ${CMAKE_SYSTEM_PROCESSOR}")
     endif()
 endif()
 
@@ -82,7 +85,7 @@ if(wxTOOLKIT_EXTRA)
     set(wxTOOLKIT_DESC "with support for: ${wxTOOLKIT_DESC}")
 endif()
 
-message(STATUS "Configured wxWidgets ${wxVERSION} for ${CMAKE_SYSTEM}
+message(STATUS "Configured wxWidgets ${wxVERSION} for ${CMAKE_SYSTEM_NAME}
     Min OS Version required at runtime:                ${wxREQUIRED_OS_DESC}
     Which GUI toolkit should wxWidgets use?            ${wxBUILD_TOOLKIT} ${wxTOOLKIT_VERSION} ${wxTOOLKIT_DESC}
     Should wxWidgets be compiled into single library?  ${wxBUILD_MONOLITHIC}
