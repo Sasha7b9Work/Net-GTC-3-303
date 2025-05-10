@@ -1,1 +1,1 @@
-start ..\..\generated\GUI\RES-Network-GUI.sln
+start ..\..\generated\GUI\GTC-3-GUI.sln

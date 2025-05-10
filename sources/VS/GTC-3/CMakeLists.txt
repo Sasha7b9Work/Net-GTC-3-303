@@ -44,6 +44,7 @@ if(WIN32)
                    # a base class copy constructor is inaccessible or deleted
         /wd4626    # 'derived class' : assignment operator was implicitly defined as deleted because
                    # a base class assignment operator is inaccessible or deleted
+        /wd4710    # 'xxx': function not inlined
         /wd4774    # 'string' : format string expected in argument number is not a string literal
         /wd4820    # 'xxx' bytes padding added after construct 'member_name'
         /wd4996    # deprecated
