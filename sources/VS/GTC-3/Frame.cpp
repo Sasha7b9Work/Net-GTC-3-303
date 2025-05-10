@@ -11,9 +11,6 @@
 // Здесь нарисованная картинка
 static wxBitmap bitmap(Display::WIDTH, Display::HEIGHT);
 
-// Здесь будем рисовать
-static wxMemoryDC memDC;
-
 Frame *Frame::self = nullptr;
 
 static const int IMAGE_SCALE = 2;
@@ -240,6 +237,9 @@ void ST7735::WriteBuffer(int x0, int y0, int width, int height)
         ConvertColor((Color::E)8),
         ConvertColor((Color::E)9)
     };
+
+    // Здесь будем рисовать
+    static wxMemoryDC memDC;
 
     memDC.SelectObject(bitmap);
 
