@@ -57,8 +57,7 @@ namespace Display
         Measure(TypeMeasure::Temperature),
         Measure(TypeMeasure::Pressure),
         Measure(TypeMeasure::Humidity),
-        Measure(TypeMeasure::DewPoint),
-        Measure(TypeMeasure::Illumination)
+        Measure(TypeMeasure::DewPoint)
     };
 
     static void DrawMeasures();
@@ -318,8 +317,7 @@ void Display::DrawMeasures()
         TypeMeasure::Temperature,
         TypeMeasure::Pressure,
         TypeMeasure::Humidity,
-        TypeMeasure::DewPoint,
-        TypeMeasure::Illumination
+        TypeMeasure::DewPoint
     };
 
     int y = y0;
@@ -380,11 +378,10 @@ void Display::DrawBigMeasure()
 
     static const int x[TypeMeasure::Count] =
     {
-        30,
-        12,
-        28,
-        10,
-        10
+        15,
+        32,
+        29,
+        20
     };
 
     Measure &measure = measures[gset.display.typeDisplaydInfo.value];
@@ -406,8 +403,7 @@ String<> Display::Measure::Name()
         "ÒÅÌÏÅĞÀÒÓĞÀ",
         "ÄÀÂËÅÍÈÅ",
         "ÂËÀÆÍÎÑÒÜ",
-        "ÒÎ×ÊÀ ĞÎÑÛ",
-        "ÎÑÂÅÙÅÍÍÎÑÒÜ"
+        "ÒÎ×ÊÀ ĞÎÑÛ"
     };
 
     String<> result(names[type]);
@@ -422,8 +418,7 @@ String<> Display::Measure::Units()
         "¨Ñ",
         "ãÏà",
         "%%",
-        "¨Ñ",
-        "ëì"
+        "¨Ñ"
     };
 
     return String<>(units[type]);

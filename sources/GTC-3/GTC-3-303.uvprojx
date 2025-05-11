@@ -852,21 +852,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Modules/BH1750</GroupName>
-          <Files>
-            <File>
-              <FileName>BH1750.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\src\Modules\BH1750\BH1750.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>BH1750.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Modules\BH1750\BH1750.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Modules/BME280</GroupName>
           <Files>
             <File>
@@ -1920,21 +1905,6 @@
               <FileName>PageMeasures.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\src\Menu\Pages\PageMeasures.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Modules/BH1750</GroupName>
-          <Files>
-            <File>
-              <FileName>BH1750.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\src\Modules\BH1750\BH1750.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>BH1750.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Modules\BH1750\BH1750.h</FilePath>
             </File>
           </Files>
         </Group>
