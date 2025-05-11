@@ -45,12 +45,12 @@ static void Before_OpenTime(bool open)
 DEF_TIMEITEM(tTime, *PageSystem::self, Before_OpenTime, cur_field, state, time)
 
 
-DEF_GOVERNOR(gSerialNumber,
-    "Ñ/Í",
+DEF_GOVERNOR(gDeviceID,
+    "Device ID",
     *PageSystem::self,
     nullptr,
     0, (int)0x7FFFFFFF,
-    gset.system.serial_number
+    gset.system.deviceID
 )
 
 
@@ -76,7 +76,7 @@ DEF_PAGE_4(pageSystem, //-V1027
     nullptr,
     bBattery,
     tTime,
-    gSerialNumber,
+    gDeviceID,
     bClosePageSystem
 )
 

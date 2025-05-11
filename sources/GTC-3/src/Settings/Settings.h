@@ -48,14 +48,14 @@ struct SettingsMeasures
 
 struct SettingsSystem
 {
-    int serial_number;
+    int deviceID;
 };
 
 
 struct Settings
 {
-    uint crc;
-    uint number;
+    uint             crc;
+    uint             number;
     SettingsDisplay  display;
     SettingsSystem   system;
     SettingsMeasures measures;
