@@ -33,8 +33,8 @@ class Screen : public wxPanel
 public:
     Screen(wxWindow *parent) : wxPanel(parent)
     {
-        SetMinSize({ Display::WIDTH * IMAGE_SCALE, Display::HEIGHT * IMAGE_SCALE });
-        SetDoubleBuffered(true);
+        wxPanel::SetMinSize({ Display::WIDTH * IMAGE_SCALE, Display::HEIGHT * IMAGE_SCALE });
+        wxPanel::SetDoubleBuffered(true);
         Bind(wxEVT_PAINT, &Screen::OnPaint, this);
         Bind(wxEVT_LEFT_DOWN, &Frame::OnMouseLeftDown, Frame::Self());
         Bind(wxEVT_LEFT_UP, &Frame::OnMouseLeftUp, Frame::Self());
