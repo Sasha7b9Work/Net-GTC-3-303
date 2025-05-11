@@ -33,8 +33,6 @@ Settings gset = def_set;
 
 void Settings::Load()
 {
-#ifndef WIN32
-
     Settings settings;
 
     if (HAL_ROM::LoadSettings(settings))
@@ -45,8 +43,6 @@ void Settings::Load()
     {
         gset = def_set;
     }
-
-#endif
 }
 
 
@@ -58,8 +54,6 @@ void Settings::Reset()
 
 void Settings::Save()
 {
-#ifndef WIN32
-
     Settings settings;
 
     bool need_save = false;
@@ -82,8 +76,6 @@ void Settings::Save()
 
         HAL_ROM::SaveSettings(gset);
     }
-
-#endif
 }
 
 
