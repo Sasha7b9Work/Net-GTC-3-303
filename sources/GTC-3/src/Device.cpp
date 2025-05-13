@@ -13,7 +13,6 @@
 #include "Display/Display.h"
 #include "Hardware/Keyboard.h"
 #include "Hardware/Beeper.h"
-#include "Display/StartScreen.h"
 #include <cmath>
 
 
@@ -47,8 +46,6 @@ void Device::Init()
     W25Q80DV::Test::Run();
 
     Beeper::Start(2000);
-
-    StartScreen::Run();
 }
 
 

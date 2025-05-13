@@ -579,16 +579,6 @@
               <FileType>5</FileType>
               <FilePath>.\src\Display\Zones.h</FilePath>
             </File>
-            <File>
-              <FileName>StartScreen.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\src\Display\StartScreen.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>StartScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Display\StartScreen.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1635,16 +1625,6 @@
               <FileName>Zones.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\src\Display\Zones.h</FilePath>
-            </File>
-            <File>
-              <FileName>StartScreen.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\src\Display\StartScreen.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>StartScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Display\StartScreen.h</FilePath>
             </File>
           </Files>
         </Group>
