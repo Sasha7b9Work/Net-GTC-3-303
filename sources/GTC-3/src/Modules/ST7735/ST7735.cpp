@@ -112,6 +112,63 @@ void ST7735::Init()
 
 #ifndef GUI
 
+#ifdef DEBUG
+
+#define WRITE_NIBBLE(nibble)    \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
+    \
+    SPI2->DR = Color::colors[value & 0x0f]; \
+    value >>= 4;
+
+#else
 
 #define WRITE_NIBBLE(nibble)    \
     asm("nop");                 \
@@ -176,6 +233,7 @@ void ST7735::Init()
     SPI2->DR = Color::colors[value & 0x0f]; \
     value >>= 4;
 
+#endif
 
 void ST7735::WriteBuffer(int x0, int y0, int width, int height)
 {
