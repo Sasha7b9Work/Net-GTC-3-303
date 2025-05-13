@@ -159,7 +159,9 @@ void ST7735::Init()
     asm("nop");                 \
     asm("nop");                 \
     asm("nop");                 \
-    \
+    asm("nop");                 \
+    asm("nop");                 \
+    asm("nop");                 \
     asm("nop");                 \
     asm("nop");                 \
     asm("nop");                 \
