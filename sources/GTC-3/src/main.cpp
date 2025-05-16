@@ -8,10 +8,12 @@
 */
 
 
+
 #ifndef WIN32
-    #if __ARMCC_VERSION != 6230001
+    #if __ARMCC_VERSION != 6210000
         // На других версиях компиляторов не проверялось
-        #error "Requires ARM Compiler V6.23 from uVision 5.42a"
+        // Но на 6.23 (и, видимо, 6.22) из Keil 5.42a вылетает с BKPT 0xAB. Нужна реализация putc, etc for _sys_open (файл Retarget.c)
+        #error "Requires ARM Compiler V6.21 from uVision 5.39"
     #endif
 #endif
 

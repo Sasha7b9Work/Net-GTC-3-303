@@ -6,8 +6,8 @@
 
 void HAL_ROM::SaveSettings(const Settings &set)
 {
-    std::ofstream file("settings.bin", std::ios::out | std::ios::binary);
-    file.write(&set, sizeof(set));
+//    std::ofstream file("settings.bin", std::ios::out | std::ios::binary);
+//    file.write(&set, sizeof(set));
 }
 
 
