@@ -2,5 +2,5 @@
 
 *** Tools ***
 
-Keil v5.42a compiler v6.23
+Keil v5.42a compiler v6.21
 
