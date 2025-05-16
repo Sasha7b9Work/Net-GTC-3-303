@@ -21,13 +21,6 @@
 #include "usbd_ctlreq.h"
 #include "usbd_ioreq.h"
 
-#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-    #pragma clang diagnostic ignored "-Wswitch-enum"
-    #pragma clang diagnostic ignored "-Wcast-align"
-    #pragma clang diagnostic ignored "-Wdeclaration-after-statement"
-    #pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
-    #pragma clang diagnostic ignored "-Wimplicit-int-conversion"
-#endif
 
 /** @addtogroup STM32_USBD_STATE_DEVICE_LIBRARY
   * @{
@@ -859,7 +852,6 @@ void USBD_ParseSetupRequest(USBD_SetupReqTypedef *req, uint8_t *pdata)
 void USBD_CtlError(USBD_HandleTypeDef *pdev,
                    USBD_SetupReqTypedef *req)
 {
-  (void)req;
   USBD_LL_StallEP(pdev, 0x80U);
   USBD_LL_StallEP(pdev, 0U);
 }
