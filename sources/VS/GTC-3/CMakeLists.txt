@@ -2,9 +2,9 @@
 
 project (GTC-3)
 
-set(CMAKE_UNITY_BUILD OFF)
+#set(CMAKE_UNITY_BUILD OFF)
 
-set(CMAKE_UNITY_BUILD_BATCH_SIZE 16)
+#set(CMAKE_UNITY_BUILD_BATCH_SIZE 16)
 
 include_directories(
     .

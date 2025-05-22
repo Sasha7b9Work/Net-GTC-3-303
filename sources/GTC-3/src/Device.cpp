@@ -13,6 +13,7 @@
 #include "Display/Display.h"
 #include "Hardware/Keyboard.h"
 #include "Hardware/Beeper.h"
+#include "Storage/Storage.h"
 #include <cmath>
 
 
@@ -30,6 +31,8 @@ void Device::Init()
     gset.Load();
 
     gset.Reset();
+
+    Storage::Init();
 
     ST7735::Init();
 
