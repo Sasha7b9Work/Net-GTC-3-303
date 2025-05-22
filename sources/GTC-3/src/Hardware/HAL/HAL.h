@@ -7,6 +7,8 @@
 
 struct PackedTime
 {
+    // \warn –азмер этой структуры не должен быть больше 32 бит
+
     uint hours : 5;
     uint minutes : 6;
     uint seconds : 6;

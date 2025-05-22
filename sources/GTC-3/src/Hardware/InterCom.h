@@ -18,5 +18,5 @@ namespace InterCom
 {
     void SetDirection(Direction::E);
 
-    void Send(TypeMeasure::E, float measure);
+    bool Send(TypeMeasure::E, float measure);
 }

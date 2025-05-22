@@ -61,7 +61,7 @@ void InterCom::SetDirection(Direction::E dir)
 }
 
 
-void InterCom::Send(TypeMeasure::E type, float measure)
+bool InterCom::Send(TypeMeasure::E type, float measure)
 {
     static const pchar names[TypeMeasure::Count] =
     {
@@ -98,4 +98,6 @@ void InterCom::Send(TypeMeasure::E type, float measure)
     ClientTCP::Transmit(data.Data(), data.Size()); 
 
 #endif
+
+    return true;
 }
