@@ -1,7 +1,6 @@
 // 2022/04/27 11:48:13 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Device.h"
-#include "Measures.h"
 #include "Hardware/HAL/HAL.h"
 #include "Modules/HC12/HC12.h"
 #include "Modules/BME280/BME280.h"
@@ -9,11 +8,12 @@
 #include "Modules/ST7735/ST7735.h"
 #include "Modules/W25Q80DV/W25Q80DV.h"
 #include "Hardware/Timer.h"
-#include "Hardware/InterCom.h"
 #include "Display/Display.h"
 #include "Hardware/Keyboard.h"
 #include "Hardware/Beeper.h"
 #include "Storage/Storage.h"
+#include "Hardware/InterCom.h"
+#include "Storage/Measures.h"
 #include <cmath>
 
 
@@ -42,7 +42,7 @@ void Device::Init()
 
     Keyboard::Init();
 
-    InterCom::SetDirection((Direction::E)(Direction::CDC | Direction::HC12 | Direction::Display));
+    InterCom::SetDirection((Direction::E)(Direction::CDC | Direction::HC12));
 
     Beeper::Init();
 
@@ -68,13 +68,13 @@ void Device::Update()
 
     if (BME280::GetMeasures(&temp, &pressure, &humidity))
     {
-        InterCom::Send(TypeMeasure::Temperature, temp);
-        InterCom::Send(TypeMeasure::Pressure, pressure);
-        InterCom::Send(TypeMeasure::Humidity, humidity);
+        Storage::Append(TypeMeasure::Temperature, temp);
+        Storage::Append(TypeMeasure::Pressure, pressure);
+        Storage::Append(TypeMeasure::Humidity, humidity);
 
         float dew_point = CalculateDewPoint(temp, humidity);
 
-        InterCom::Send(TypeMeasure::DewPoint, dew_point);
+        Storage::Append(TypeMeasure::DewPoint, dew_point);
 
         bool in_range = Measures::InRange(TypeMeasure::Temperature, temp) &&
             Measures::InRange(TypeMeasure::Pressure, pressure) &&
@@ -96,6 +96,8 @@ void Device::Update()
     Display::Update();
 
     HAL_ADC::GetVoltage();
+
+    Storage::Update();
 }
 
 

@@ -9,8 +9,7 @@ struct Direction
     {
         _None   = 0,
         CDC     = (1 << 0),
-        HC12    = (1 << 1),
-        Display = (1 << 2)
+        HC12    = (1 << 1)
     };
 };
 

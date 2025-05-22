@@ -1,6 +1,18 @@
 // 2023/06/12 16:46:45 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-#include "Display/Display.h"
+
+
+struct TypeMeasure
+{
+    enum E
+    {
+        Temperature,        // Температура
+        Pressure,           // Давление
+        Humidity,           // Влажность
+        DewPoint,           // Точка росы
+        Count
+    };
+};
 
 
 namespace Measures

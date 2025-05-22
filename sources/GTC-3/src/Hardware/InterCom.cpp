@@ -10,7 +10,6 @@
 #include "Utils/Math.h"
 #include "Settings/Settings.h"
 #include "Hardware/HAL/HAL.h"
-#include "Measures.h"
 
 #ifdef GUI
     #include "Hardware/LAN/ClientTCP.h"
@@ -79,14 +78,6 @@ void InterCom::Send(TypeMeasure::E type, float measure)
         "%%",
         "degress Celsius"
     };
-
-    if (direction & Direction::Display)
-    {
-        if (!Measures::IsFixed())
-        {
-            Display::SetMeasure(type, measure);
-        }
-    }
 
     if (direction & Direction::CDC)
     {

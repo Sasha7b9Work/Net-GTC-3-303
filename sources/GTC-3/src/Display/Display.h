@@ -2,19 +2,7 @@
 #pragma once
 #include "Display/Colors.h"
 #include "Utils/Text/String.h"
-
-
-struct TypeMeasure
-{
-    enum E
-    {
-        Temperature,        // Температура
-        Pressure,           // Давление
-        Humidity,           // Влажность
-        DewPoint,           // Точка росы
-        Count
-    };
-};
+#include "Storage/Storage.h"
 
 
 namespace Display
