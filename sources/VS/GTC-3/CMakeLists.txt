@@ -2,7 +2,7 @@
 
 project (GTC-3)
 
-set(CMAKE_UNITY_BUILD OFF)
+#set(CMAKE_UNITY_BUILD OFF)
 
 #set(CMAKE_UNITY_BUILD_BATCH_SIZE 16)
 
@@ -81,7 +81,8 @@ file(GLOB MODULES_BME280            ../../GTC-3/src/Modules/BME280/*.*)
 file(GLOB MODULES_HC12              ../../GTC-3/src/Modules/HC12/*.*)
 file(GLOB MODULES_HIH4000           ../../GTC-3/src/Modules/HIH4000/*.*)
 file(GLOB MODULES_ST7735            ../../GTC-3/src/Modules/ST7735/*.*)
-file(GLOB MODULES_W25Q80DV          ../../GTC-3/src/Modules/W25Q80DV/*.*)
+file(GLOB MODULES_W25Q80DV          ../../GTC-3/src/Modules/W25Q80DV/*.h
+                                                    Modules/W25Q80DV/*.*)
 file(GLOB SETTINGS                  ../../GTC-3/src/Settings/*.*)
 file(GLOB STORAGE                   ../../GTC-3/src/Storage/*.*)
 file(GLOB UTILS                     ../../GTC-3/src/Utils/*.*)
