@@ -92,9 +92,9 @@ namespace MemoryStorage
 
     struct Page
     {
-        void Init(int num_page)
+        void Init(int num_sector)
         {
-            startAddress = BEGIN + W25Q80DV::SIZE_PAGE * (uint)num_page;
+            startAddress = BEGIN + W25Q80DV::SIZE_SECTOR * (uint)num_sector;
         }
 
         Record *FirstRecord()
@@ -104,7 +104,7 @@ namespace MemoryStorage
 
         int GetMaxRecordsCount() const
         {
-            return W25Q80DV::SIZE_PAGE / sizeof(Record);
+            return W25Q80DV::SIZE_SECTOR / sizeof(Record);
         }
 
         int GetRecordsCount()
@@ -167,9 +167,9 @@ namespace MemoryStorage
 
         void Erase()
         {
-            int num_page = (int)(startAddress / W25Q80DV::SIZE_PAGE);
+            int num_page = (int)(startAddress / W25Q80DV::SIZE_SECTOR);
 
-            W25Q80DV::ErasePage(num_page);
+            W25Q80DV::EraseSector(num_page);
         }
 
         void *Begin()
@@ -248,7 +248,7 @@ namespace MemoryStorage
         uint startAddress;
     };
 
-    static const int NUM_PAGES = (END - BEGIN) / W25Q80DV::SIZE_PAGE;
+    static const int NUM_PAGES = (END - BEGIN) / W25Q80DV::SIZE_SECTOR;
 
     static Page pages[NUM_PAGES];
 

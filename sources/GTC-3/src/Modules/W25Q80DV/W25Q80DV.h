@@ -6,7 +6,7 @@ namespace W25Q80DV
 {
     static const uint BEGIN = 0;
     static const uint END = 1024 * 1024;
-    static const int SIZE_PAGE = 4 * 1024;
+    static const int SIZE_SECTOR = 4 * 1024;
 
     // Размер буфера ограничен 1024 байтами
     void WriteLess1024bytes(uint address, const void *buffer, int size);
@@ -19,15 +19,15 @@ namespace W25Q80DV
     // Стереть страницу, которой принадлежит address
     void EraseSectorForAddress(uint address);
 
-    void ErasePage(int num_page);
+    void EraseSector(int num_sector);
 
     void WriteUInt(uint address, uint value);
 
-    void Write(uint address, uint8 byte);
+    void WriteUInt8(uint address, uint8 byte);
 
     void WriteData(uint, const void *, int);
 
-    uint8 Read(uint address);
+    uint8 ReadUInt8(uint address);
 
     namespace Test
     {

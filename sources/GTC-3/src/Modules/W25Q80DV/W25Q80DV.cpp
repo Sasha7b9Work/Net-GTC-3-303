@@ -75,7 +75,7 @@ void W25Q80DV::WriteUInt(uint address, uint value)
 }
 
 
-void W25Q80DV::Write(uint address, uint8 byte)
+void W25Q80DV::WriteUInt8(uint address, uint8 byte)
 {
     pinWP.ToHi();
 
@@ -87,7 +87,7 @@ void W25Q80DV::Write(uint address, uint8 byte)
 
 void W25Q80DV::WriteData(uint, const void *, int)
 {
-
+    LOG_ERROR("Function not realized");
 }
 
 
@@ -95,9 +95,9 @@ void W25Q80DV::EraseSectorForAddress(uint address)
 {
     pinWP.ToHi();
 
-    address /= SIZE_PAGE;     // \ .
-                              // | Рассчитываем адрес первого байта стираемого сектора
-    address *= SIZE_PAGE;     // / 
+    address /= SIZE_SECTOR;     // \ .
+                                // | Рассчитываем адрес первого байта стираемого сектора
+    address *= SIZE_SECTOR;     // / 
 
     WaitRelease();
 
@@ -111,9 +111,9 @@ void W25Q80DV::EraseSectorForAddress(uint address)
 }
 
 
-void W25Q80DV::ErasePage(int num_page)
+void W25Q80DV::EraseSector(int num_sector)
 {
-    EraseSectorForAddress((uint)num_page * SIZE_PAGE);
+    EraseSectorForAddress((uint)num_sector * SIZE_SECTOR);
 }
 
 
@@ -141,7 +141,7 @@ void W25Q80DV::ReadLess1024bytes(uint address, void *_buffer, int size)
 }
 
 
-uint8 W25Q80DV::Read(uint address)
+uint8 W25Q80DV::ReadUInt8(uint address)
 {
     uint8 result = 0;
 
@@ -161,9 +161,9 @@ bool W25Q80DV::Test::Run()
     {
         uint8 byte = (uint8)std::rand();
 
-        Write(i, byte);
+        WriteUInt8(i, byte);
 
-        if (byte != Read(i))
+        if (byte != ReadUInt8(i))
         {
             EraseSectorForAddress(0);
             result = false;

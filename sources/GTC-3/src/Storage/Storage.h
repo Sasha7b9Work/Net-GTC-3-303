@@ -17,7 +17,7 @@ struct Measurements
 
 namespace Storage
 {
-    static const int SIZE = 1024 * 1024 - 2 * W25Q80DV::SIZE_PAGE;        // 8 MBit = 1 MByte
+    static const int SIZE = 1024 * 1024 - 2 * W25Q80DV::SIZE_SECTOR;        // 8 MBit = 1 MByte
 
     void AppendData(const Measurements &);
 
