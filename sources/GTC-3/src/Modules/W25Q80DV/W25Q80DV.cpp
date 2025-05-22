@@ -31,6 +31,12 @@ namespace W25Q80DV
 
     static void WaitRelease();
 
+    // Возвращает номер сектора, в котором находится данный адрес
+    static uint NumSectorForAddress(uint address);
+
+    // Возвращает номер страницы, в которой находится данный адрес
+    static uint NumPageForAddress(uint address);
+
     namespace Test
     {
         static bool result = false;
@@ -38,8 +44,22 @@ namespace W25Q80DV
 }
 
 
-void W25Q80DV::WriteLess1024bytes(uint address, const void *_buffer, int size)
+void W25Q80DV::WriteLess256bytes(uint address, const void *_buffer, int size)
 {
+    if (size > 256)
+    {
+        LOG_ERROR("Too much data");
+
+        return;
+    }
+
+    if (NumPageForAddress(address) != NumPageForAddress(address + size - 1))
+    {
+        LOG_ERROR("The data is located on different pages");
+
+        return;
+    }
+
     const uint8 *buffer = (const uint8 *)_buffer;
 
     pinWP.ToHi();
@@ -71,7 +91,7 @@ void W25Q80DV::WriteLess1024bytes(uint address, const void *_buffer, int size)
 
 void W25Q80DV::WriteUInt(uint address, uint value)
 {
-    WriteLess1024bytes(address, &value, (int)sizeof(value));
+    WriteLess256bytes(address, &value, (int)sizeof(value));
 }
 
 
@@ -79,7 +99,7 @@ void W25Q80DV::WriteUInt8(uint address, uint8 byte)
 {
     pinWP.ToHi();
 
-    WriteLess1024bytes(address, &byte, 1);
+    WriteLess256bytes(address, &byte, 1);
 
     pinWP.ToLow();
 }
@@ -95,9 +115,7 @@ void W25Q80DV::EraseSectorForAddress(uint address)
 {
     pinWP.ToHi();
 
-    address /= SIZE_SECTOR;     // \ .
-                                // | Рассчитываем адрес первого байта стираемого сектора
-    address *= SIZE_SECTOR;     // / 
+    address = NumSectorForAddress(address) * SIZE_SECTOR;   // Рассчитываем адрес первого байта стираемого сектора
 
     WaitRelease();
 
@@ -108,6 +126,18 @@ void W25Q80DV::EraseSectorForAddress(uint address)
     HAL_SPI1::Write(WRITE_DISABLE);
 
     pinWP.ToLow();
+}
+
+
+uint W25Q80DV::NumSectorForAddress(uint address)
+{
+    return address / SIZE_SECTOR;
+}
+
+
+uint W25Q80DV::NumPageForAddress(uint address)
+{
+    return address / SIZE_PAGE;
 }
 
 

@@ -60,8 +60,8 @@ if(WIN32)
     )
 endif()
 
-file(GLOB LIBS_STM32F1              ../../common/_VS_LIBS/STM32f3/*.*)
-file(GLOB LIBS_STM32F1_INC          ../../common/STM32Cube_F3/Drivers/STM32F3xx_HAL_Driver/Inc/*.*)
+file(GLOB LIBS_STM32F3              ../../common/_VS_LIBS/STM32f3/*.*)
+file(GLOB LIBS_STM32F3_INC          ../../common/STM32Cube_F3/Drivers/STM32F3xx_HAL_Driver/Inc/*.*)
 file(GLOB LIBS_USBD                 ../../common/_VS_LIBS/USBD/*.*)
 file(GLOB SRC                       *.h *.cpp
                                     ../../GTC-3/src/*.*)
@@ -83,11 +83,12 @@ file(GLOB MODULES_HIH4000           ../../GTC-3/src/Modules/HIH4000/*.*)
 file(GLOB MODULES_ST7735            ../../GTC-3/src/Modules/ST7735/*.*)
 file(GLOB MODULES_W25Q80DV          ../../GTC-3/src/Modules/W25Q80DV/*.*)
 file(GLOB SETTINGS                  ../../GTC-3/src/Settings/*.*)
+file(GLOB STORAGE                   ../../GTC-3/src/Storage/*.*)
 file(GLOB UTILS                     ../../GTC-3/src/Utils/*.*)
 file(GLOB UTILS_TEXT                ../../GTC-3/src/Utils/Text/*.*)
 
-source_group(libs/STM32F1           FILES ${LIBS_STM32F1})
-source_group(libs/STM32F1/Inc       FILES ${LIBS_STM32F1_INC})
+source_group(libs/STM32F3           FILES ${LIBS_STM32F3})
+source_group(libs/STM32F3/Inc       FILES ${LIBS_STM32F3_INC})
 source_group(libs/USBD              FILES ${LIBS_USBD})
 source_group(src                    FILES ${SRC})
 source_group(Display                FILES ${DISPLAY})
@@ -105,6 +106,7 @@ source_group(Modules/HIH4000        FILES ${MODULES_HIH4000})
 source_group(Modules/ST7735         FILES ${MODULES_ST7735})
 source_group(Modules/W25Q80DV       FILES ${MODULES_W25Q80DV})
 source_group(Settings               FILES ${SETTINGS})
+source_group(Storage                FILES ${STORAGE})
 source_group(Utils                  FILES ${UTILS})
 source_group(Utils/Text             FILES ${UTILS_TEXT})
 
@@ -129,8 +131,8 @@ set_source_files_properties(
 )
 
 add_executable( ${PROJECT_NAME}
-    ${LIBS_STM32F1}
-    ${LIBS_STM32F1_INC}
+    ${LIBS_STM32F3}
+    ${LIBS_STM32F3_INC}
     ${LIBS_USBD}
     ${SRC}
     ${DISPLAY}
@@ -148,6 +150,7 @@ add_executable( ${PROJECT_NAME}
     ${MODULES_ST7735}
     ${MODULES_W25Q80DV}
     ${SETTINGS}
+    ${STORAGE}
     ${UTILS}
     ${UTILS_TEXT}
 )
