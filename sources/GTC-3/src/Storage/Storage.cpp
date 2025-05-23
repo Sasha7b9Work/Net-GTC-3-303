@@ -7,10 +7,20 @@
 
 namespace Storage
 {
-    // Возвращает указатель на самое "старое" измреение
-    static Record *GetOldestRecord();
+    namespace Memory
+    {
+        static bool IsFull();
 
-    static void EraseRecord(Record *);
+        // Стереть самую старую запись
+        static void EraseOldestRecord();
+
+        // Возвращает указатель на самое "старое" измерение
+        static Record *GetOldestRecord();
+
+        static void EraseRecord(Record *);
+
+        static void Append(TypeMeasure::E, float);
+    }
 }
 
 
@@ -26,20 +36,27 @@ void Storage::Append(TypeMeasure::E type, float value)
     {
         Display::SetMeasure(type, value);
     }
+
+    if (Memory::IsFull())
+    {
+        Memory::EraseOldestRecord();
+    }
+
+    Memory::Append(type, value);
 }
 
 
 void Storage::Update()
 {
-    Record *record = GetOldestRecord();
+    Record *record = Memory::GetOldestRecord();
 
     while (record)
     {
         if (InterCom::Send((TypeMeasure::E)record->type, record->value))
         {
-            EraseRecord(record);
+            Memory::EraseRecord(record);
 
-            record = GetOldestRecord();
+            record = Memory::GetOldestRecord();
         }
         else
         {
@@ -49,13 +66,35 @@ void Storage::Update()
 }
 
 
-Storage::Record *Storage::GetOldestRecord()
+Storage::Record *Storage::Memory::GetOldestRecord()
 {
+    LOG_ERROR("Not implemented");
+
     return nullptr;
 }
 
 
-void Storage::EraseRecord(Record *)
+void Storage::Memory::EraseRecord(Record *)
 {
+    LOG_ERROR("Not implemented");
+}
 
+
+void Storage::Memory::Append(TypeMeasure::E, float)
+{
+    LOG_ERROR("Not implemented");
+}
+
+
+void Storage::Memory::EraseOldestRecord()
+{
+    LOG_ERROR("Not implemented");
+}
+
+
+bool Storage::Memory::IsFull()
+{
+    LOG_ERROR("Not implemented");
+
+    return true;
 }

@@ -67,6 +67,7 @@ file(GLOB SRC                       *.h *.cpp
                                     ../../GTC-3/src/*.*)
 file(GLOB DISPLAY                   ../../GTC-3/src/Display/*.*)
 file(GLOB DISPLAY_FONT              ../../GTC-3/src/Display/Font/*.*)
+file(GLOB GUI                                       GUI/*.*)
 file(GLOB HARDWARE                  ../../GTC-3/src/Hardware/*.*)
 file(GLOB HARDWARE_CDC              ../../GTC-3/src/Hardware/CDC/*.*
                                                     Hardware/CDC/*.*)
@@ -94,6 +95,7 @@ source_group(libs/USBD              FILES ${LIBS_USBD})
 source_group(src                    FILES ${SRC})
 source_group(Display                FILES ${DISPLAY})
 source_group(Display/Font           FILES ${DISPLAY_FONT})
+source_group(GUI                    FILES ${GUI})
 source_group(Hardware               FILES ${HARDWARE})
 source_group(Hardware/CDC           FILES ${HARDWARE_CDC})
 source_group(Hardware/HAL           FILES ${HARDWARE_HAL})
@@ -118,8 +120,9 @@ set_source_files_properties(
     Hardware/LAN/libnet/netclient.cpp
     Hardware/LAN/libnet/netpacket.cpp
     Hardware/LAN/ClientTCP.cpp
-    Application.cpp
-    Frame.cpp
+    GUI/Application.cpp
+    GUI/ConsoleGUI.cpp
+    GUI/Frame.cpp
     main_win.cpp
     PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
 )
@@ -138,6 +141,7 @@ add_executable( ${PROJECT_NAME}
     ${SRC}
     ${DISPLAY}
     ${DISPLAY_FONT}
+    ${GUI}
     ${HARDWARE}
     ${HARDWARE_CDC}
     ${HARDWARE_HAL}

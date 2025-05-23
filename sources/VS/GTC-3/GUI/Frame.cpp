@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "Menu/Menu.h"
 #include "wx/statline.h"
+#include "GUI/ConsoleGUI.h"
 
 
 // Здесь нарисованная картинка
@@ -83,6 +84,7 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_TIMER, &Frame::OnTimer, this, TIMER_ID);
     Bind(wxEVT_TIMER, &Frame::OnTimerButton1, this, TIMER_BUTTON_ID_1);
     Bind(wxEVT_TIMER, &Frame::OnTimerButton2, this, TIMER_BUTTON_ID_2);
+    Bind(wxEVT_CLOSE_WINDOW, &Frame::OnCloseEvent, this);
 
     timerButton1.SetOwner(this, TIMER_BUTTON_ID_1);
     timerButton2.SetOwner(this, TIMER_BUTTON_ID_2);
@@ -109,6 +111,17 @@ void Frame::OnQuit(wxCommandEvent &WXUNUSED(event))
 {
     Close(true);
 }
+
+
+void Frame::OnCloseEvent(wxCloseEvent &event)
+{
+    ConsoleGUI::self->Show(false);
+
+    delete ConsoleGUI::self;
+
+    event.Skip(true);
+}
+
 
 void Frame::OnAbout(wxCommandEvent &WXUNUSED(event))
 {

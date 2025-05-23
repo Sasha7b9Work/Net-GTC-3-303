@@ -37,4 +37,6 @@ private:
     TimeMeterMS meterButton2;       // Для кнопки 2
     wxTimer timerButton1;
     wxTimer timerButton2;
+
+    void OnCloseEvent(wxCloseEvent &);
 };
