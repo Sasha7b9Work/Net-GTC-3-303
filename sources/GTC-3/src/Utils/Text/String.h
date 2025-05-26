@@ -25,7 +25,7 @@ public:
 
         if(num_symbols < 0 || num_symbols > capacity - 1)
         {
-            LOG_ERROR_TRACE("Very small string buffer %d, need %d:", capacity, num_symbols);
+            LOG_ERROR("Very small string buffer %d, need %d:", capacity, num_symbols);
         }
     }
 
@@ -38,7 +38,7 @@ public:
 
         if(num_symbols < 0 || num_symbols > capacity - 1)
         {
-            LOG_ERROR_TRACE("Very small string buffer %d, need %d:", capacity, num_symbols);
+            LOG_ERROR("Very small string buffer %d, need %d:", capacity, num_symbols);
         }
     }
 
