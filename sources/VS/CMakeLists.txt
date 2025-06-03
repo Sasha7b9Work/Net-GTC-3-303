@@ -1,6 +1,6 @@
 # (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 # Set project name
 project (GTC-3-GUI)
