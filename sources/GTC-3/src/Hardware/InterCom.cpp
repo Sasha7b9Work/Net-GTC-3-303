@@ -24,9 +24,9 @@ namespace InterCom
     *  1       - 'B'
     *  2       - 'C'
     *  3       - type
-    *  4 ...11 - ID
-    *  12...15 - hash[12...15]
-    *  16...19 - value
+    *  4...7   - ID
+    *  8...11  - hash[12...15]
+    *  12...15 - value
     */
 
     Direction::E direction = Direction::_None;
