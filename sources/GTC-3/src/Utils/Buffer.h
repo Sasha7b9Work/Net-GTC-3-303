@@ -43,7 +43,7 @@ public:
 
         if (size > size_buffer)
         {
-            LOG_ERROR("%s:%d : Very small buffer %d, need %d", __FILE__, __LINE__, MAX_SIZE, size);
+            LOG_ERROR("%s:%d : Very small buffer %d, need %d", __FILE__, __LINE__, size_buffer, size);
             size = size_buffer;
         }
     }
@@ -65,7 +65,7 @@ public:
 
         if (size > size_buffer)
         {
-            LOG_ERROR("%s:%d : Very small buffer %d, need %d", __FILE__, __LINE__, MAX_SIZE, size);
+            LOG_ERROR("%s:%d : Very small buffer %d, need %d", __FILE__, __LINE__, size_buffer, size);
             size = size_buffer;
         }
 
@@ -80,7 +80,7 @@ public:
     {
         if (_size > Size())
         {
-            LOG_ERROR("%s:%d : Very small buffer %d, need %d", __FILE__, __LINE__, MAX_SIZE, _size);
+            LOG_ERROR("%s:%d : Very small buffer %d, need %d", __FILE__, __LINE__, size_buffer, _size);
             _size = Size();
         }
 
