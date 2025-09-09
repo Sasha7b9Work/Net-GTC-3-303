@@ -18,37 +18,26 @@
 
 namespace InterCom
 {
-    /*
-    *  Формат сообщения.
-    *  0       - 'A'
-    *  1       - 'B'
-    *  2       - 'C'
-    *  3       - type
-    *  4...7   - ID
-    *  8...11  - hash[12...15]
-    *  12...15 - value
-    */
-
     Direction::E direction = Direction::_None;
 
-    Buffer<uint8, 16> CreateMessage(TypeMeasure::E type, float value)
+    Buffer<16> CreateMessage(TypeMeasure::E type, float value)
     {
-        Buffer<uint8, 16> message;
+        Buffer<16> message;
 
-        message[0] = 'A';                           // offset 0
+        message[0] = 'A';
         message[1] = 'B';
         message[2] = 'C';
         message[3] = (uint8)type;
 
-        uint id = HAL::GetUID();                    // offset 4
+        uint id = HAL::GetUID();
 
-        std::memcpy(&message[4], &id, 4);
+        std::memcpy(&message[4], &id, sizeof(id));
 
-        std::memcpy(&message[12], &value, 4);       // offset 12
+        std::memcpy(&message[8], &value, sizeof(value));
 
-        uint hash = Math::CalculateCRC(&value, 4);
+        uint hash = Math::CalculateCRC(&message[0], 12);
 
-        std::memcpy(&message[8], &hash, 4);         // offset 8
+        std::memcpy(&message[12], &hash, sizeof(hash));
 
         return message;
     }
@@ -86,7 +75,7 @@ bool InterCom::Send(TypeMeasure::E type, float measure)
         HCDC::Transmit(message.c_str(), message.Size() + 1);
     }
 
-    Buffer<uint8, 16> data = CreateMessage(type, measure); //-V821
+    Buffer<16> data = CreateMessage(type, measure); //-V821
 
     if (direction & Direction::HC12)
     {

@@ -31,12 +31,6 @@ namespace W25Q80DV
 
     static void WaitRelease();
 
-    // Возвращает номер сектора, в котором находится данный адрес
-    static uint NumSectorForAddress(uint address);
-
-    // Возвращает номер страницы, в которой находится данный адрес
-    static uint NumPageForAddress(uint address);
-
     namespace Test
     {
         static bool result = false;
@@ -44,44 +38,36 @@ namespace W25Q80DV
 }
 
 
-void W25Q80DV::WriteLess256bytes(uint address, const void *_buffer, int size)
+template void W25Q80DV::WriteBuffer<36>(uint, const void *);
+template uint8 *MemBuffer<512>::Read(uint);
+template uint8 *MemBuffer<8192>::Read(uint);
+
+
+void W25Q80DV::Init()
 {
-    if (size > 256)
-    {
-        LOG_ERROR("Too much data");
+}
 
-        return;
-    }
 
-    if (NumPageForAddress(address) != NumPageForAddress(address + size - 1))
-    {
-        LOG_ERROR("The data is located on different pages");
-
-        return;
-    }
-
-    const uint8 *buffer = (const uint8 *)_buffer;
-
+template<int count>
+void W25Q80DV::WriteBuffer(uint address, const void *_buffer)
+{
     pinWP.ToHi();
 
     WaitRelease();
 
     HAL_SPI1::Write(WRITE_ENABLE);          // Write enable
 
-    Buffer<uint8, 1024> data;
+    Buffer<count + 1 + 3> data;
 
     data[0] = PROGRAM_PAGE; //-V525
-    data[1] = (uint8)(address >> 16);       // \.
+    data[1] = (uint8)(address >> 16);       // /
     data[2] = (uint8)(address >> 8);        // | Адрес
     data[3] = (uint8)(address);             // / 
 
-    for (int i = 0; i < size; i++)
-    {
-        data[4 + i] = buffer[i];
-    }
+    std::memcpy(&data[4], _buffer, count);
 
     //                          команда   адрес
-    HAL_SPI1::Write(data.Data(), size + 1 + 3);     // Page program
+    HAL_SPI1::Write(data.Data(), count + 1 + 3);     // Page program
 
     HAL_SPI1::Write(WRITE_DISABLE);                 // Write disable
 
@@ -91,15 +77,25 @@ void W25Q80DV::WriteLess256bytes(uint address, const void *_buffer, int size)
 
 void W25Q80DV::WriteUInt(uint address, uint value)
 {
-    WriteLess256bytes(address, &value, (int)sizeof(value));
+    WriteBuffer<sizeof(value)>(address, &value);
 }
 
 
-void W25Q80DV::WriteUInt8(uint address, uint8 byte)
+uint W25Q80DV::ReadUInt(uint address)
+{
+    MemBuffer<4> buffer;
+
+    uint *pointer = (uint *)buffer.Read(address);
+
+    return *pointer;
+}
+
+
+void W25Q80DV::Write(uint address, uint8 byte)
 {
     pinWP.ToHi();
 
-    WriteLess256bytes(address, &byte, 1);
+    WriteBuffer<sizeof(byte)>(address, &byte);
 
     pinWP.ToLow();
 }
@@ -107,7 +103,7 @@ void W25Q80DV::WriteUInt8(uint address, uint8 byte)
 
 void W25Q80DV::WriteData(uint, const void *, int)
 {
-    LOG_ERROR("Function not realized");
+
 }
 
 
@@ -115,7 +111,9 @@ void W25Q80DV::EraseSectorForAddress(uint address)
 {
     pinWP.ToHi();
 
-    address = NumSectorForAddress(address) * SIZE_SECTOR;   // Рассчитываем адрес первого байта стираемого сектора
+    address /= SIZE_PAGE;     // / 
+                              // | Рассчитываем адрес первого байта стираемого сектора
+    address *= SIZE_PAGE;     // / 
 
     WaitRelease();
 
@@ -129,55 +127,40 @@ void W25Q80DV::EraseSectorForAddress(uint address)
 }
 
 
-uint W25Q80DV::NumSectorForAddress(uint address)
+void W25Q80DV::Clear()
 {
-    return address / SIZE_SECTOR;
-}
-
-
-uint W25Q80DV::NumPageForAddress(uint address)
-{
-    return address / SIZE_PAGE;
-}
-
-
-void W25Q80DV::EraseSector(int num_sector)
-{
-    EraseSectorForAddress((uint)num_sector * SIZE_SECTOR);
-}
-
-
-void W25Q80DV::ReadLess1024bytes(uint address, void *_buffer, int size)
-{
-    uint8 *buffer = (uint8 *)_buffer;
-
-    WaitRelease();
-
-    Buffer<uint8, 1024> out;
-
-    out[0] = READ_DATA; //-V525
-    out[1] = (uint8)(address >> 16);
-    out[2] = (uint8)(address >> 8);
-    out[3] = (uint8)(address);
-
-    Buffer<uint8, 1024> in;
-
-    HAL_SPI1::WriteRead(out.Data(), in.Data(), size + 1 + 3);
-
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < NUM_PAGES; i++)
     {
-        buffer[i] = in[4 + i];
+        ErasePage(i);
     }
+}
+
+
+void W25Q80DV::ErasePage(int num_page)
+{
+    EraseSectorForAddress((uint)num_page * SIZE_PAGE);
+}
+
+
+template<int count>
+uint8 *MemBuffer<count>::Read(uint address)
+{
+    W25Q80DV::WaitRelease();
+
+    data[0] = READ_DATA;
+    data[1] = (uint8)(address >> 16);
+    data[2] = (uint8)(address >> 8);
+    data[3] = (uint8)(address);
+
+    HAL_SPI1::WriteRead(data, data, count + 4);
+
+    return Data();
 }
 
 
 uint8 W25Q80DV::ReadUInt8(uint address)
 {
-    uint8 result = 0;
-
-    ReadLess1024bytes(address, &result, 1);
-
-    return result;
+    return *MemBuffer<1>().Read(address);
 }
 
 
@@ -185,25 +168,22 @@ bool W25Q80DV::Test::Run()
 {
     EraseSectorForAddress(0);
 
-    result = false;
+    result = true;
 
     for (uint i = 0; i < 1024; i++)
     {
         uint8 byte = (uint8)std::rand();
 
-        WriteUInt8(i, byte);
+        Write(i, byte);
 
         if (byte != ReadUInt8(i))
         {
             EraseSectorForAddress(0);
             result = false;
-            return result;
         }
     }
 
     EraseSectorForAddress(0);
-
-    result = true;
 
     return result;
 }
