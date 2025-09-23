@@ -46,7 +46,9 @@ void Device::Init()
 
     Beeper::Init();
 
-    W25Q80DV::Test::Run();
+    while(!W25Q80DV::Test::Run())
+    {
+    }
 
     Beeper::Start(2000);
 }
