@@ -168,8 +168,6 @@ bool W25Q80DV::Test::Run()
 {
     EraseSectorForAddress(0);
 
-    result = true;
-
     for (uint i = 0; i < 1024; i++)
     {
         uint8 byte = (uint8)std::rand();
@@ -178,14 +176,11 @@ bool W25Q80DV::Test::Run()
 
         if (byte != ReadUInt8(i))
         {
-            EraseSectorForAddress(0);
-            result = false;
+            return false;
         }
     }
 
-    EraseSectorForAddress(0);
-
-    return result;
+    return true;
 }
 
 
