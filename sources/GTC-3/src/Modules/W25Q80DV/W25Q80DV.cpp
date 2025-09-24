@@ -30,11 +30,6 @@ namespace W25Q80DV
     static bool IsBusy();
 
     static void WaitRelease();
-
-    namespace Test
-    {
-        static bool result = false;
-    }
 }
 
 
@@ -112,7 +107,7 @@ void W25Q80DV::EraseSectorForAddress(uint address)
     pinWP.ToHi();
 
     address /= SIZE_PAGE;     // / 
-                              // | Рассчитываем адрес первого байта стираемого сектора
+    // | Рассчитываем адрес первого байта стираемого сектора
     address *= SIZE_PAGE;     // / 
 
     WaitRelease();
@@ -166,26 +161,47 @@ uint8 W25Q80DV::ReadUInt8(uint address)
 
 bool W25Q80DV::Test::Run()
 {
-    EraseSectorForAddress(0);
+    static const uint MAX_I = 1024;
 
-    for (uint i = 0; i < 1024; i++)
+    int num_FF = 0;
+    int num_00 = 0;
+
+    for (uint i = 0; i < MAX_I; i++)
     {
-        uint8 byte = (uint8)std::rand();
+        uint8 byte = ReadUInt8(i);
 
-        Write(i, byte);
-
-        if (byte != ReadUInt8(i))
+        if (byte == 0xFF)
         {
-            return false;
+            num_FF++;
+        }
+
+        if (byte == 0x00)
+        {
+            num_00++;
         }
     }
 
-    return true;
-}
+    if (num_FF > (int)MAX_I / 2 || num_00 > (int)MAX_I / 2)
+    {
+        EraseSectorForAddress(0);
 
+        for (uint i = 0; i < MAX_I; i++)
+        {
+            Write(i, (uint8)std::rand());
+        }
+    }
 
-bool W25Q80DV::Test::Result()
-{
+    int sum = 0;
+
+    for (uint i = 0; i < MAX_I; i++)
+    {
+        sum += ReadUInt8(i);
+    }
+
+    int ave_value = sum / (int)MAX_I;
+
+    bool result = ave_value > 50 && ave_value < 200;
+
     return result;
 }
 

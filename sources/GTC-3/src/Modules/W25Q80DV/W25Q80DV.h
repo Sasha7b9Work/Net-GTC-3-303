@@ -49,7 +49,5 @@ namespace W25Q80DV
     namespace Test
     {
         bool Run();
-
-        bool Result();
     }
 }
