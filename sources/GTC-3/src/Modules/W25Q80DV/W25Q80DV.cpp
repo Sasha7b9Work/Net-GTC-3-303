@@ -174,8 +174,7 @@ bool W25Q80DV::Test::Run()
         {
             num_FF++;
         }
-
-        if (byte == 0x00)
+        else if (byte == 0x00)
         {
             num_00++;
         }
@@ -200,7 +199,7 @@ bool W25Q80DV::Test::Run()
 
     int ave_value = sum / (int)MAX_I;
 
-    bool result = ave_value > 50 && ave_value < 200;
+    bool result = ave_value > 100 && ave_value < 150;
 
     return result;
 }
