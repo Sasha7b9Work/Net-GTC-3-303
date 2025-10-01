@@ -106,7 +106,6 @@ Measurements Storage::GetLastMeasurements()
         (float)measures[Measure::Pressure].GetDouble(),
         (float)measures[Measure::Humidity].GetDouble(),
         (float)measures[Measure::DewPoint].GetDouble(),
-        (float)measures[Measure::Velocity].GetDouble(),
         HAL_RTC::GetTime()
     );
 

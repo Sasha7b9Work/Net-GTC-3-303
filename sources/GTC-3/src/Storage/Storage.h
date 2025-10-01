@@ -8,12 +8,11 @@
 struct Measurements
 {
 public:
-    Measurements(float temp = 0.0f, float press = 0.0f, float hum = 0.0f, float dew = 0.0f, float vel = 0.0f, PackedTime _time = PackedTime()) :
+    Measurements(float temp = 0.0f, float press = 0.0f, float hum = 0.0f, float dew = 0.0f, PackedTime _time = PackedTime()) :
         temperature(temp),
         pressure(press),
         humidity(hum),
         dew_point(dew),
-        velocity(vel),
         time(_time),
         control_field(0)
     {
@@ -23,7 +22,6 @@ public:
     float GetPressure()    const { return pressure; }
     float GetHumidity()    const { return humidity; }
     float GetDewPoint()    const { return dew_point; }
-    float GetVelocity()    const { return velocity; }
     PackedTime GetTime()   const { return time; }
 
     uint CalculateCRC() const;
@@ -36,7 +34,6 @@ private:
     float pressure;
     float humidity;
     float dew_point;
-    float velocity;
     PackedTime time;
 
 public:
