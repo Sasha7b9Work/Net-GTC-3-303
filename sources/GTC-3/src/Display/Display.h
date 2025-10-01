@@ -12,7 +12,7 @@ namespace Display
 
     extern bool need_redraw;
 
-    void SetMeasure(TypeMeasure::E, float measure);
+    void SetMeasure(Measure::E, float measure);
 
     void Update();
 

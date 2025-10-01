@@ -37,12 +37,12 @@ namespace Display
         String<> old;
         String<> current;
 
-        TypeMeasure::E type;
+        ::Measure::E type;
         float value;                // Последнее установленное значение
         int position;               // Текущая отрисовываемая позиция
         uint time;                  // Время последнего изменения текущей отрисовываемой позиции
 
-        Measure(TypeMeasure::E t) : type(t), value(0.0f), position(0), time(0) {}
+        Measure(::Measure::E t) : type(t), value(0.0f), position(0), time(0) {}
 
         void Draw(const int x, const int y, int size = 1);
 
@@ -51,12 +51,12 @@ namespace Display
         String<> Units();
     };
 
-    static Measure measures[TypeMeasure::Count] =
+    static Measure measures[4] =
     {
-        Measure(TypeMeasure::Temperature),
-        Measure(TypeMeasure::Pressure),
-        Measure(TypeMeasure::Humidity),
-        Measure(TypeMeasure::DewPoint)
+        Measure(::Measure::Temperature),
+        Measure(::Measure::Pressure),
+        Measure(::Measure::Humidity),
+        Measure(::Measure::DewPoint)
     };
 
     static void DrawMeasures();
@@ -191,7 +191,7 @@ void Rectangle::Draw(int x, int y, Color::E color)
 }
 
 
-void Display::SetMeasure(TypeMeasure::E type, float value)
+void Display::SetMeasure(::Measure::E type, float value)
 {
     Settings::SaveMeasure(type, value);
 
@@ -311,17 +311,17 @@ void Display::DrawMeasures()
     const int y0 = d_lines;
     const int dY = d_lines + Font::Height();
 
-    static const TypeMeasure::E types[TypeMeasure::Count] =
+    static const ::Measure::E types[4] =
     {
-        TypeMeasure::Temperature,
-        TypeMeasure::Pressure,
-        TypeMeasure::Humidity,
-        TypeMeasure::DewPoint
+        ::Measure::Temperature,
+        ::Measure::Pressure,
+        ::Measure::Humidity,
+        ::Measure::DewPoint
     };
 
     int y = y0;
 
-    for (int i = 0; i < TypeMeasure::Count; i++)
+    for (int i = 0; i < 4; i++)
     {
         int x = 93;
         int width = 30;
@@ -375,7 +375,7 @@ void Display::DrawBigMeasure()
 
     BeginScene(Color::BLACK);
 
-    static const int x[TypeMeasure::Count] =
+    static const int x[4] =
     {
         15,
         32,
@@ -397,7 +397,7 @@ void Display::DrawBigMeasure()
 
 String<> Display::Measure::Name()
 {
-    static const pchar names[TypeMeasure::Count] =
+    static const pchar names[4] =
     {
         "ТЕМПЕРАТУРА",
         "ДАВЛЕНИЕ",
@@ -412,7 +412,7 @@ String<> Display::Measure::Name()
 
 String<> Display::Measure::Units()
 {
-    static const pchar units[TypeMeasure::Count] =
+    static const pchar units[4] =
     {
         "ЁС",
         "гПа",

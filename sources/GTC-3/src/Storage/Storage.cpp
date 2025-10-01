@@ -1,100 +1,128 @@
-// 2025/05/22 16:18:54 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+// 2023/09/08 11:47:04 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Storage/Storage.h"
-#include "Display/Display.h"
-#include "Hardware/InterCom.h"
+#include "Hardware/Timer.h"
+#include "Storage/MemoryStorage.h"
+#include "Hardware/HAL/HAL.h"
+#include "Utils/Math.h"
+#include "Hardware/CDC/CDC.h"
+#include "Modules/W25Q80DV/W25Q80DV.h"
+
+
+/*
+*   Р’ РїРµСЂРІС‹С… РґРІСѓС… СЃРµРєС‚РѕСЂР°С… С…СЂР°РЅРёС‚СЃСЏ СЃР»СѓР¶РµР±РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ
+*/
 
 
 namespace Storage
 {
-    namespace Memory
+    struct DataInfo
     {
-        static bool IsFull();
+        uint address_first;     // Р°РґСЂРµСЃ РїРµСЂРІРѕР№ Р·Р°РїРёСЃРё
+        uint address_last;      // Р°РґСЂРµСЃ РїРѕСЃР»РµРґРЅРµР№ Р·Р°РїРёСЃРё
+    };
 
-        // Стереть самую старую запись
-        static void EraseOldestRecord();
+    static Measure measures[NUM_MEASURES_TO_CONTROL];
 
-        // Возвращает указатель на самое "старое" измерение
-        static Record *GetOldestRecord();
-
-        static void EraseRecord(Record *);
-
-        static void Append(TypeMeasure::E, float);
-    }
+    static bool GetMeasure(Measure::E, Measure &measure);
 }
 
 
 void Storage::Init()
 {
+    MemoryStorage::Init();
 
+    for (int i = 0; i < NUM_MEASURES_TO_CONTROL; i++)
+    {
+        measures[i].Set((Measure::E)i, 0.0f);
+        measures[i].correct = false;
+    }
 }
 
 
-void Storage::Append(TypeMeasure::E type, float value)
+void Storage::AppendMeasure(const Measure &measure)
 {
-    if (!Measures::IsFixed())
+    if (measure.GetName() < NUM_MEASURES_TO_CONTROL)
     {
-        Display::SetMeasure(type, value);
+        if (measure.correct)
+        {
+            measures[measure.GetName()] = measure;
+        }
+    }
+}
+
+
+void Storage::SaveMeasures()
+{
+    static TimeMeterMS meter;
+    
+    if(!meter.IsFinished())
+    {
+        return;
     }
 
-    if (Memory::IsFull())
+    meter.FinishAfter(5000);
+
+    Measurements measurements = GetLastMeasurements();
+
+    MemoryStorage::Append(measurements);
+}
+
+
+bool Storage::GetMeasure(Measure::E name, Measure &measure)
+{
+    if (((int)name) >= 0 && name < Measure::Count)
     {
-        Memory::EraseOldestRecord();
+        measure = measures[name];
+
+        return measure.correct;
     }
 
-    Memory::Append(type, value);
+    return false;
+}
+
+
+bool Storage::AllLastMeasuresInRange()
+{
+    Measure measure;
+
+    for (int i = 0; i < Measure::NumAlarmed(); i++)
+    {
+        if (GetMeasure((Measure::E)i, measure) && !measure.InRange())
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+Measurements Storage::GetLastMeasurements()
+{
+    Measurements measurements
+    (
+        (float)measures[Measure::Temperature].GetDouble(),
+        (float)measures[Measure::Pressure].GetDouble(),
+        (float)measures[Measure::Humidity].GetDouble(),
+        (float)measures[Measure::DewPoint].GetDouble(),
+        (float)measures[Measure::Velocity].GetDouble(),
+        HAL_RTC::GetTime()
+    );
+
+    return measurements;
+}
+
+
+uint Measurements::CalculateCRC() const
+{
+    int size = (uint8 *)&crc - (uint8 *)&number;
+
+    return Math::CalculateCRC(&number, size);
 }
 
 
 void Storage::Update()
 {
-    Record *record = Memory::GetOldestRecord();
 
-    while (record)
-    {
-        if (InterCom::Send((TypeMeasure::E)record->type, record->value))
-        {
-            Memory::EraseRecord(record);
-
-            record = Memory::GetOldestRecord();
-        }
-        else
-        {
-            record = nullptr;
-        }
-    }
-}
-
-
-Storage::Record *Storage::Memory::GetOldestRecord()
-{
-    LOG_ERROR("Not implemented");
-
-    return nullptr;
-}
-
-
-void Storage::Memory::EraseRecord(Record *)
-{
-    LOG_ERROR("Not implemented");
-}
-
-
-void Storage::Memory::Append(TypeMeasure::E, float)
-{
-    LOG_ERROR("Not implemented");
-}
-
-
-void Storage::Memory::EraseOldestRecord()
-{
-    LOG_ERROR("Not implemented");
-}
-
-
-bool Storage::Memory::IsFull()
-{
-    LOG_ERROR("Not implemented");
-
-    return true;
 }

@@ -3,6 +3,9 @@
 #include "Display/Display.h"
 
 
+#define NUM_MEASURES_TO_CONTROL 4
+
+
 struct TypeDisplayedInformation
 {
     enum E
@@ -32,17 +35,17 @@ struct TypeDisplayedInformation
 
 struct SettingsDisplay
 {
-    uint8                       show_measure[TypeMeasure::Count];
+    uint8                       show_measure[Measure::Count];
     TypeDisplayedInformation    typeDisplaydInfo;
 };
 
 
 struct SettingsMeasures
 {
-    int limit_min[TypeMeasure::Count];
-    int limit_max[TypeMeasure::Count];
-    float value_min[TypeMeasure::Count];
-    float value_max[TypeMeasure::Count];
+    int limit_min[Measure::Count];
+    int limit_max[Measure::Count];
+    float value_min[Measure::Count];
+    float value_max[Measure::Count];
 };
 
 
@@ -70,10 +73,10 @@ struct Settings
     static void Reset();
 
     // ≈сли value больше или меньше уже сохранЄнного измерени€, то перезаписывает старое
-    static void SaveMeasure(TypeMeasure::E, float value);
+    static void SaveMeasure(Measure::E, float value);
 
     // —брасывает мин и макс значени€ измерени€
-    static void ResetMeasure(TypeMeasure::E);
+    static void ResetMeasure(Measure::E);
 };
 
 

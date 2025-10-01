@@ -204,7 +204,7 @@ struct DState
 {
     COMMON_PART_ITEM;
 
-    TypeMeasure::E type_meas;
+    Measure::E type_meas;
 
     const bool is_min;          // Если true, то хранит минимальное значение, иначе - максимальное
 };

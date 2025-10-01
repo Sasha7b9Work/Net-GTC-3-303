@@ -20,7 +20,7 @@ namespace InterCom
 {
     Direction::E direction = Direction::_None;
 
-    Buffer<16> CreateMessage(TypeMeasure::E type, float value)
+    Buffer<16> CreateMessage(Measure::E type, float value)
     {
         Buffer<16> message;
 
@@ -50,9 +50,9 @@ void InterCom::SetDirection(Direction::E dir)
 }
 
 
-bool InterCom::Send(TypeMeasure::E type, float measure)
+bool InterCom::Send(Measure::E type, float measure)
 {
-    static const pchar names[TypeMeasure::Count] =
+    static const pchar names[Measure::Count] =
     {
         "Temperature",
         "Pressure",
@@ -60,7 +60,7 @@ bool InterCom::Send(TypeMeasure::E type, float measure)
         "Dew Point"
     };
 
-    static const pchar units[TypeMeasure::Count] =
+    static const pchar units[Measure::Count] =
     {
         "degress Celsius",
         "hPa",

@@ -41,6 +41,9 @@ typedef unsigned char uchar;
 // Промежуток между измерениями
 #define TIME_MEASURE  500
 
+#ifdef WIN32
+#define __attribute__(x)
+#endif
 
 #ifdef GUI
     #define IN_MODE_TEST

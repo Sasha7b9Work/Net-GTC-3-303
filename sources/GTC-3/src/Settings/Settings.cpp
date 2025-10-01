@@ -93,7 +93,7 @@ bool Settings::operator!=(const Settings &rhs)
 }
 
 
-void Settings::SaveMeasure(TypeMeasure::E type, float value)
+void Settings::SaveMeasure(Measure::E type, float value)
 {
     if (gset.measures.value_max[type] == ERROR_VALUE_FLOAT)
     {
@@ -118,7 +118,7 @@ void Settings::SaveMeasure(TypeMeasure::E type, float value)
 }
 
 
-void Settings::ResetMeasure(TypeMeasure::E type)
+void Settings::ResetMeasure(Measure::E type)
 {
     gset.measures.value_max[type] = ERROR_VALUE_FLOAT;
 

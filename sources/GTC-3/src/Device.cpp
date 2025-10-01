@@ -19,7 +19,7 @@
 
 namespace Device
 {
-    static float CalculateDewPoint(float temperature, float humidity);
+    static Measure CalculateDewPoint(Measure &temperature, Measure &humidity);
     static float CalculateF(float temperature, float humidity);
 }
 
@@ -64,24 +64,24 @@ void Device::Update()
         }
     }
 
-    float temp = 0.0f;
-    float pressure = 0.0f;
-    float humidity = 0.0;
+    Measure temp;
+    Measure pressure;
+    Measure humidity;
 
     if (BME280::GetMeasures(&temp, &pressure, &humidity))
     {
-        Storage::Append(TypeMeasure::Temperature, temp);
-        Storage::Append(TypeMeasure::Pressure, pressure);
-        Storage::Append(TypeMeasure::Humidity, humidity);
+        Storage::AppendMeasure(temp);
+        Storage::AppendMeasure(pressure);
+        Storage::AppendMeasure(humidity);
 
-        float dew_point = CalculateDewPoint(temp, humidity);
+        Measure dew_point = CalculateDewPoint(temp, humidity);
 
-        Storage::Append(TypeMeasure::DewPoint, dew_point);
+        Storage::AppendMeasure(dew_point);
 
-        bool in_range = Measures::InRange(TypeMeasure::Temperature, temp) &&
-            Measures::InRange(TypeMeasure::Pressure, pressure) &&
-            Measures::InRange(TypeMeasure::Humidity, humidity) &&
-            Measures::InRange(TypeMeasure::DewPoint, dew_point);
+        bool in_range = temp.InRange() &&
+            pressure.InRange() &&
+            humidity.InRange() &&
+            dew_point.InRange();
 
         if (in_range)
         {
@@ -103,11 +103,14 @@ void Device::Update()
 }
 
 
-float Device::CalculateDewPoint(float temperature, float humidity)
+Measure Device::CalculateDewPoint(Measure &temperature, Measure &humidity)
 {
-    float f = CalculateF(temperature, humidity);
+    float f = CalculateF((float)temperature.value, (float)humidity.value);
 
-    return (237.7f * f) / (17.27f - f);
+    Measure result;
+    result.Set(Measure::DewPoint, (237.7f * f) / (17.27f - f));
+
+    return result;
 }
 
 

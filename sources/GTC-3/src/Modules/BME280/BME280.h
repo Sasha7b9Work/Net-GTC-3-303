@@ -1,6 +1,6 @@
 // (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-#include "defines.h"
+#include "Storage/Measures.h"
 
 
 /*
@@ -10,5 +10,5 @@ namespace BME280
 {
     bool Init();
 
-    bool GetMeasures(float *temp, float *pressure, float *humidity);
+    bool GetMeasures(Measure *temp, Measure *pressure, Measure *humidity);
 }

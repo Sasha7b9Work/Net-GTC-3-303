@@ -75,7 +75,7 @@ bool BME280::AttemptConnection(uint8 id)
 }
 
 
-bool BME280::GetMeasures(float* temp, float* pressure, float* humidity)
+bool BME280::GetMeasures(Measure *temp, Measure *pressure, Measure *humidity)
 {
     if(HAL_GetTick() < timeNext)
     {
@@ -110,9 +110,9 @@ bool BME280::GetMeasures(float* temp, float* pressure, float* humidity)
 
     if (result == BME280_OK)
     {
-        *temp = (float)comp_data.temperature;
-        *pressure = (float)comp_data.pressure / 100.0f;
-        *humidity = (float)comp_data.humidity;
+        temp->Set(Measure::Temperature, (float)comp_data.temperature);
+        pressure->Set(Measure::Pressure, (float)comp_data.pressure / 100.0f);
+        humidity->Set(Measure::Humidity, (float)comp_data.humidity);
 
         timeNext += TIME_MEASURE + ((uint)std::rand() % 100);
     }

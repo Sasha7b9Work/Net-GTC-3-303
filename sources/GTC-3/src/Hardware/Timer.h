@@ -1,5 +1,4 @@
 #pragma once
-#include "defines.h"
 
 
 #define TIME_MS Timer::CurrentTime()

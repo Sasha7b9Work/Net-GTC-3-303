@@ -23,16 +23,19 @@ bool Measures::IsFixed()
 }
 
 
-bool Measures::InRange(TypeMeasure::E type, float value)
+bool Measure::InRange() const
 {
-    if (value < (float)gset.measures.limit_min[type])
+    if (((int)name) >= 0 && name < NUM_MEASURES_TO_CONTROL)
     {
-        return false;
-    }
+        if (GetDouble() < gset.measures.limit_min[name])
+        {
+            return false;
+        }
 
-    if (value > (float)gset.measures.limit_max[type])
-    {
-        return false;
+        if (GetDouble() > gset.measures.limit_max[name])
+        {
+            return false;
+        }
     }
 
     return true;
